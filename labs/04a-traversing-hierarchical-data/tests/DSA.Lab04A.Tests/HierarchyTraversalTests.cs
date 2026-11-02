@@ -40,6 +40,17 @@ namespace DSA.Lab04A.Tests
 
             Assert.That(HierarchyTraversal.CountNodes(root), Is.EqualTo(7));
         }
+        
+        [Test]
+        public void CountNodes_DuplicateValuesAsSeparateNodes()
+        {
+            var root = new HierarchyNode<string>("Root");
+            root.AddChild("A");
+            root.AddChild("B");
+            root.AddChild("A");
+
+            Assert.That(HierarchyTraversal.CountNodes(root), Is.EqualTo(4));
+        }
 
         [Test]
         public void Contains_FindsNestedValue()
@@ -56,7 +67,7 @@ namespace DSA.Lab04A.Tests
 
             Assert.That(HierarchyTraversal.Contains(root, "Magic"), Is.False);
         }
-
+        
         [Test]
         public void DepthFirstPreOrder_VisitsParentBeforeChildren()
         {

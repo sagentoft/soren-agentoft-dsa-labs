@@ -131,3 +131,17 @@ Task 4
 3. Why does expected O(1) lookup not mean "exactly one CPU operation"?
    O(1) describes how the amount of work scales with the number of entries,
    not how many CPU operations are performed.
+
+# Lab 4A
+
+Task 1
+
+Survival ---- root, parent, depth 0
+|- Movement - parent, child, subtree root, depth 1
+|  |- Dash -- child, leaf, depth 2
+|  `- Climb - child, leaf, depth 2
+`- Combat --- child, parent, subtree root, depth 1
+   |- Sword - child, leaf, depth 2
+   `- Bow --- child, leaf, depth 2
+
+

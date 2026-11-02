@@ -64,12 +64,7 @@ namespace DSA.Lab04A
             // current node first, then each child subtree from left to right.
             var result = new List<T>();
             
-            result.Add(root.Value);
-            foreach (HierarchyNode<T> child in root.Children)
-            {
-                result.AddRange(DepthFirstPreOrder(child));
-            }
-
+            AddPreOrder(root, result);
             return result;
         }
 
@@ -90,6 +85,16 @@ namespace DSA.Lab04A
             }
 
             return deepestChild + 1;
+        }
+
+        private static void AddPreOrder<T>(HierarchyNode<T> node, List<T> result)
+        {
+            result.Add(node.Value);
+
+            foreach (HierarchyNode<T> child in node.Children)
+            {
+                AddPreOrder(child, result);
+            }
         }
     }
 }
