@@ -43,7 +43,58 @@ namespace DSA.Lab06
             //
             // Implement one small piece at a time and run the relevant tests.
 
+            while (frontier.Count > 0)
+            {
+                MinFrontier<string>.Entry entry = frontier.Dequeue();
+                string current = entry.Value;
+
+                if (!bestCost.TryGetValue(current, out int currentBest) || entry.Priority != currentBest)
+                {
+                    continue; 
+                }
+
+                expandedNodes++;
+
+                if (current == goal)
+                {
+                    return ReconstructPath(start, goal, currentBest, expandedNodes, cameFrom);
+                }
+
+                foreach (WeightedEdge edge in graph.GetOutgoing(current))
+                {
+                    int candidate = currentBest + edge.Cost;
+
+                    if (!bestCost.TryGetValue(edge.To, out int known) || candidate < known)
+                    {
+                        bestCost[edge.To] = candidate;
+                        cameFrom[edge.To] = current;
+                        frontier.Enqueue(edge.To, candidate);
+                    }
+                }
+            }
+
             return RouteResult.NotFound(expandedNodes);
+        }
+        
+        private RouteResult ReconstructPath(
+            string start,
+            string goal,
+            int totalCost,
+            int expandedNodes,
+            Dictionary<string, string> cameFrom)
+        {
+            var path = new List<string>();
+            string current = goal;
+            path.Add(current);
+
+            while (current != start)
+            {
+                current = cameFrom[current];
+                path.Add(current);
+            }
+
+            path.Reverse();
+            return RouteResult.Success(path, totalCost, expandedNodes);
         }
     }
 }
